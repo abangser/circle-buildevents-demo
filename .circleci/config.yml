@@ -4,6 +4,22 @@ orbs:
   buildevents: honeycombio/buildevents@0
 
 jobs:
+
+
+  setup:
+    docker:
+      - image: cimg/go:1.18
+
+    steps:
+      - buildevents/start_trace
+
+  watch:
+    docker:
+      - image: cimg/go:1.18
+
+    steps:
+      - buildevents/watch_build_and_finish
+
   echo:
     docker:
       - image: cimg/base:2021.04
@@ -20,4 +36,10 @@ jobs:
 workflows:
   test:
     jobs:
-      - echo
+      - setup
+      - watch:
+          requires:
+            - setup
+      - echo:
+          requires:
+            - setup
