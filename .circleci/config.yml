@@ -9,9 +9,9 @@ commands:
       - buildevents/berun:
           bename: echo
           becommand: |
-            echo "hello"
-            TXT=world
-            echo $TXT
+            echo ${PWD}
+            mkdir test
+            cd ${PWD}/test
 
 jobs:
   setup:
