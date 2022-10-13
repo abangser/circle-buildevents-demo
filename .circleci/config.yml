@@ -3,9 +3,17 @@ version: 2.1
 orbs:
   buildevents: honeycombio/buildevents@0
 
+commands:
+  cmd_echo:
+    steps:
+      - buildevents/berun:
+          bename: echo
+          becommand: |
+            echo "hello"
+            TXT=world
+            echo $TXT
+
 jobs:
-
-
   setup:
     docker:
       - image: cimg/go:1.18
@@ -26,12 +34,7 @@ jobs:
     steps:
       - buildevents/with_job_span:
           steps:
-            - buildevents/berun:
-                bename: echo
-                becommand: |
-                  echo "hello"
-                  TXT=world
-                  echo $TXT
+            - cmd_echo
 
 workflows:
   test:
