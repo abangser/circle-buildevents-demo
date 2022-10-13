@@ -19,8 +19,18 @@ commands:
             echo hello
             TXT=world
             echo $TXT
+  
+  echo_using_demo_before_env_var:
+    steps:
+      - buildevents/berun:
+          bename: echo with local env var first
+          becommand: |
+            echo
+            TXT=world
+            echo ${TXT}
+            echo hello
 
-  echo_using_env_var_first:
+  failing_echo_using_env_var_first:
     steps:
       - buildevents/berun:
           bename: echo with local env var first
@@ -62,7 +72,7 @@ jobs:
           steps:
             - echo_txt
             - echo_using_env_var
-            - echo_using_env_var_first
+            - failing_echo_using_env_var_first
             - failing_mkdir
 
 workflows:
