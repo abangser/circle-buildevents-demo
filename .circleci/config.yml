@@ -20,10 +20,10 @@ commands:
             TXT=world
             echo $TXT
   
-  echo_using_demo_before_env_var:
+  echo_using_dummy_before_env_var:
     steps:
       - buildevents/berun:
-          bename: echo with local env var first
+          bename: echo with dummy before setting env var
           becommand: |
             echo
             TXT=world
