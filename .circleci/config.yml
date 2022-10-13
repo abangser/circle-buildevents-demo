@@ -4,7 +4,32 @@ orbs:
   buildevents: honeycombio/buildevents@0
 
 commands:
-  cmd_echo:
+  echo_txt:
+    steps:
+      - buildevents/berun:
+          bename: echo with just text
+          becommand: |
+            echo hello
+
+  echo_using_env_var:
+    steps:
+      - buildevents/berun:
+          bename: echo with local env var
+          becommand: |
+            echo hello
+            TXT=world
+            echo $TXT
+
+  echo_using_env_var_first:
+    steps:
+      - buildevents/berun:
+          bename: echo with local env var first
+          becommand: |
+            TXT=world
+            echo ${TXT}
+            echo hello
+
+  failing_mkdir:
     steps:
       - buildevents/berun:
           bename: echo
@@ -12,6 +37,7 @@ commands:
             echo ${PWD}
             mkdir test
             cd ${PWD}/test
+
 
 jobs:
   setup:
@@ -34,7 +60,10 @@ jobs:
     steps:
       - buildevents/with_job_span:
           steps:
-            - cmd_echo
+            - echo_txt
+            - echo_using_env_var
+            - echo_using_env_var_first
+            - failing_mkdir
 
 workflows:
   test:
